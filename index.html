@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+
+<style>
+body{
+    background-color: #111;
+    font-family: sans-serif;
+    color: #FFF;
+    padding: 2em;
+}
+textarea {
+    color:#FFF;
+    font-family: sans-serif;
+    border: 2px solid #333;
+    background-color:#222;
+}
+footer{
+    padding-top:3em;
+    margin-bottom:-1em;
+    text-align: center;
+}
+</style>
+
+<title>Single-Grammar MIPS Compiler - Patrick Mauro</title>
+
+</head>
+
+<body>
+	
+<h1>Single-Grammar MIPS Compiler</h1>
+
+<h2>TODO:</h2>
+
+<b>Type Checker:</b>
+<ul>
+<li>Recognition of mismatched types.</li>
+</ul>
+<b>Code Gen:</b>
+<ul>
+<li>String-to-code generator. For now any string values will be reduced to 00.</li>
+<li>+/- Operations on integers. Int expressions will pass Lex, Parse, and Semantic analysis but will not generate code.</li>
+<li>If/While Support. Conditionals will pass Lex, Parse, and Semantic analysis but will not generate code.</li>
+<li>Scope. (At all.) Semantic Analysis will catch errors with scope but Code Gen cannot currently replicate accurate scope.</li>
+<li>Populate remainder of code space with 00, as is expected of properly-formatted machine code</li>
+</ul>
+
+<h2>Grammar:</h2>
+<pre>
+Program         ::== Statement $
+Statement       ::== <strong>print (</strong> Expr <strong>)</strong>
+                ::== Id <strong>=</strong> Expr
+                ::== VarDecl
+                ::== <strong>{</strong> StatementList <strong>}</strong>
+                ::== WhileStatement
+                ::== IfStatement
+WhileStatement  ::== <strong>while</strong> BooleanExpr <strong>{</strong> StatementList <strong>}</strong>
+IfStatement     ::== <strong>if</strong> BooleanExpr <strong>{</strong> StatementList <strong>}</strong>
+StatementList   ::== Statement StatementList
+                ::== <strong>&epsilon;</strong>
+Expr            ::== IntExpr
+                ::== StringExpr
+                ::== BooleanExpr
+                ::== Id
+IntExpr         ::== digit op Expr
+                ::== digit
+StringExpr      ::== <strong>"</strong> CharList <strong>"</strong>
+BooleanExpr     ::== <strong>(</strong> Expr <strong>==</strong> Expr <strong>)</strong>
+                ::== boolVal
+CharList        ::== Char CharList
+                ::== Space CharList
+                ::== <strong>&epsilon;</strong>
+VarDecl         ::== type Id
+Id              ::== char
+type            ::== <strong>int</strong> | <strong>string</strong> | <strong>boolean</strong>
+char            ::== <strong>a | b | c ... z</strong>
+space           ::== <em>the <strong>space</em></strong> character</em>
+digit           ::== <strong>1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0</strong>
+boolVal         ::== <strong>false</strong> | <strong>true</strong>
+op              ::== <strong>+ | - </strong> </pre>
+<br>
+<div>
+        Enter source code here:<br />
+        <textarea id="taSourceCode" cols="30" rows="5"></textarea>
+        <br>
+        <input type="button" id="btnCompile" value="Compile" onclick="btnCompile_click();"/>
+        <br><br>
+    <table>
+        <tr>
+            <td>Output</td>
+            <td>Intermediate Representation</td>
+            <td>Machine Code</td>
+        </tr>    
+        <tr>
+            <td><textarea id="taOutput" cols="30" rows="18"></textarea></td>
+            <td><textarea id="taIR" cols="30" rows="18"></textarea></td>
+            <!-- <td><textarea id="taTree" cols="40" rows="18"></textarea></td> -->
+            <td><textarea id="taCodeGen" cols="30" rows="18"></textarea></td>
+        </tr>
+    </table>
+
+    </div>
+
+    <script type="text/javascript" src="utils.js"></script>   
+    <script type="text/javascript" src="parser.js"></script>
+    <script type="text/javascript" src="lexer.js"></script>
+    <script type="text/javascript" src="trees.js"></script>
+    <script type="text/javascript" src="typechecker.js"></script>
+    <script type="text/javascript" src="codeGen.js"></script>
+    <script type="text/javascript" src="inits.js"></script>
+
+	<footer>
+		&copy;2013 Patrick Mauro
+	</footer>
+
+	</body>
+	</html>

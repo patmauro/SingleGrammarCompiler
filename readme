@@ -1,0 +1,23 @@
+------------------------------
+ SINGLE-GRAMMAR MIPS COMPILER
+------------------------------
+Created by Patrick Mauro, 2013
+
+Written in JavaScript, this algorithm takes statements belonging to a specific grammar and converts them into machine code, analyzing the structure with a symbol table and abstract syntax tree along the way.
+
+This is a project I abandoned midway through two years ago, but I've been meaning to get back to it soon and finish it for good.
+
+
+TODO:
+
+Type Checker
+------------
+- Recognition of mismatched types
+
+Code Gen
+--------
+- String-to-code generator. For now any string values are reduced to 00.
+- +/- Operations on integers. Int expressions will pass Lex, Parse, and Semantic analysis but will not generate code.
+- If/While Support. Conditionals will pass Lex, Parse, and Semantic analysis but will not generate code.
+- Any kind of Scope. Semantic Analysis will catch errors with scope but Code Gen cannot currently replicate accurate scope.
+- Populate remainder of code space with 00, as is expected of properly-formatted machine code.
